@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Oswald } from "next/font/google";
 import "./globals.css";
+import ThemeProvider from "@/components/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,10 +34,8 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} h-full antialiased`}
     >
-      <body className="h-screen overflow-y-scroll snap-y snap-mandatory bg-[#0D0605] text-white scroll-smooth"
-        style={{ scrollbarWidth: "none" }}
-      >
-        {children}
+      <body className="h-screen overflow-hidden bg-[#0D0605] text-white">
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
