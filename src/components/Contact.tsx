@@ -1,6 +1,9 @@
+"use client";
+
 import { Mail, ArrowUpRight } from "lucide-react";
 import { SiInstagram } from "react-icons/si";
 import { FaLinkedin } from "react-icons/fa";
+import { useLang } from "@/context/LanguageContext";
 
 const contacts = [
   {
@@ -33,8 +36,10 @@ const contacts = [
 ];
 
 export default function Contact() {
+  const { t } = useLang();
+
   return (
-    <div className="relative h-full w-full  flex flex-col items-center justify-center px-8 overflow-hidden" >
+    <div className="relative h-full w-full flex flex-col items-center justify-center px-16 overflow-hidden" style={{ backgroundColor: "#0D0605" }}>
       {/* Background glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(155,27,27,0.12),transparent_70%)] pointer-events-none" />
 
@@ -45,12 +50,15 @@ export default function Contact() {
         </p>
         <h2
           className="text-6xl xl:text-7xl font-bold uppercase text-white leading-none mb-4"
-          style={{ fontFamily: "var(--font-oswald)" }}
+          style={{ fontFamily: "var(--font-lora)" }}
         >
-          Get In Touch
+          {t("Get In Touch", "Hubungi Saya")}
         </h2>
         <p className="text-white/30 text-sm max-w-md mx-auto leading-relaxed">
-          Terbuka untuk peluang baru, kolaborasi, atau sekadar ngobrol seputar teknologi.
+          {t(
+            "Open to new opportunities, collaborations, or just a chat about technology.",
+            "Terbuka untuk peluang baru, kolaborasi, atau sekadar ngobrol seputar teknologi."
+          )}
         </p>
       </div>
 

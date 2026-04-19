@@ -39,7 +39,8 @@ export default function Navbar({ active, onNavigate }: Props) {
   return (
     <TooltipProvider delay={200}>
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 backdrop-blur-sm">
+      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center py-4 backdrop-blur-sm">
+        <div className="flex items-center justify-between w-full max-w-[1440px] px-16">
 
         {/* Hamburger */}
         <button
@@ -115,7 +116,7 @@ export default function Navbar({ active, onNavigate }: Props) {
             </TooltipContent>
           </Tooltip>
         </div>
-
+        </div>
       </header>
 
       {/* Hamburger popup */}
@@ -143,7 +144,7 @@ export default function Navbar({ active, onNavigate }: Props) {
                   <span className="font-mono text-xs w-8 flex-shrink-0 text-white/30">
                     {link.num}/
                   </span>
-                  <span className="font-bold tracking-widest uppercase flex-1" style={{ fontFamily: "var(--font-oswald)", fontSize: "1.4rem" }}>
+                  <span className="font-bold tracking-widest uppercase flex-1" style={{ fontFamily: "var(--font-lora)", fontSize: "1.4rem" }}>
                     {lang === "EN" ? link.labelEn : link.labelId}
                   </span>
                   {active === link.id && (

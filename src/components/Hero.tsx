@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowUpRight, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -11,15 +13,17 @@ import {
   SiJenkins,
   SiClaude,
 } from "react-icons/si";
+import { useLang } from "@/context/LanguageContext";
 
 export default function Hero() {
+  const { lang, t } = useLang();
   return (
     <section
       id="home"
       className="relative flex-1 w-full overflow-hidden flex flex-col min-h-0"
       style={{ backgroundColor: "#0D0605" }}
     >
-      {/* Background gradients (dark only) */}
+      {/* Background gradients */}
       <div className="absolute inset-0 z-0 block">
         <div className="absolute inset-0 bg-gradient-to-br from-[#1A0A06] via-[#0D0605] to-[#0a0303]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_30%_60%_at_50%_40%,rgba(180,120,60,0.18),transparent_70%)]" />
@@ -28,7 +32,7 @@ export default function Hero() {
 
       {/* Person photo */}
       <div className="absolute inset-0 z-0 flex items-end justify-center pointer-events-none overflow-hidden">
-        <div className="relative w-[80%] h-[140%] mb-0">
+        <div className="relative w-full md:w-[80%] h-[90%] md:h-[140%] mb-0">
           <Image
             src="/foto-profile.png"
             alt="Profile photo"
@@ -40,100 +44,92 @@ export default function Hero() {
       </div>
 
       {/* Content overlay */}
-      <div className="relative z-10 flex-1 flex flex-col pt-20">
-        <div className="flex-1 grid grid-cols-3 gap-0">
+      <div className="relative z-10 flex-1 flex flex-col pt-16 md:pt-20">
+        <div className="flex-1 max-w-[1440px] mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-0">
 
           {/* LEFT column */}
-          <div className="flex flex-col justify-between px-8 py-10">
+          <div className="flex flex-col justify-between px-6 py-8 md:px-12 md:py-12">
             <div>
               <h1
-                className="text-5xl xl:text-6xl font-bold leading-[0.95] uppercase tracking-tight mb-6"
-                style={{ fontFamily: "var(--font-oswald)", color: "white" }}
+                className="text-5xl sm:text-6xl xl:text-7xl font-bold leading-[1] md:leading-[0.95] uppercase tracking-tight mb-4 md:mb-6"
+                style={{ fontFamily: "var(--font-caveat)", color: "white" }}
               >
-                Crafting
-                <br />
-                Seamless
-                <br />
-                Digital
-                <br />
-                Experiences
-                <br />
-                With Code.
+                {lang === "EN" ? (
+                  <>Code.<br />Craft.<br />Deliver.</>
+                ) : (
+                  <>Kode.<br />Rancang.<br />Kirim.</>
+                )}
               </h1>
               <p className="text-sm leading-relaxed max-w-[220px] mb-6" style={{ color: "rgba(255,255,255,0.5)" }}>
-                Frontend Engineer with{" "}
-                <span className="font-bold" style={{ color: "white" }}>4 years</span>{" "}
-                of experience building modern web applications.
+                {t("Frontend Engineer with", "Frontend Engineer dengan")}{" "}
+                <span className="font-bold" style={{ color: "white" }}>4 {t("years", "tahun")}</span>{" "}
+                {t("of experience building modern web applications.", "pengalaman membangun aplikasi web modern.")}
               </p>
               <Button className="bg-[#9B1B1B] hover:bg-[#B52020] text-white rounded-full px-8 py-5 text-sm font-bold tracking-widest uppercase border-0">
-                Read More
+                {t("Read More", "Selengkapnya")}
               </Button>
             </div>
 
             {/* Stat cards */}
-            <div className="flex gap-3">
+            <div className="flex gap-3 mt-8 md:mt-0">
               {/* Card 1 */}
-              <div className="bg-white/95 dark:bg-white/95 text-black rounded-2xl p-4 flex flex-col justify-between w-36 min-h-[140px] shadow-sm">
+              <div className="bg-white/95 text-black rounded-2xl p-4 flex flex-col justify-between w-32 sm:w-36 min-h-[120px] sm:min-h-[140px] shadow-sm">
                 <div className="w-7 h-7 bg-black rounded-md flex items-center justify-center">
                   <Plus className="w-4 h-4 text-white" strokeWidth={3} />
                 </div>
                 <div>
-                  <div className="text-4xl font-bold text-black" style={{ fontFamily: "var(--font-oswald)" }}>
-                    472+
+                  <div className="text-3xl sm:text-4xl font-bold text-black" style={{ fontFamily: "var(--font-lora)" }}>
+                    5+
                   </div>
                   <div className="text-[10px] text-black/60 uppercase tracking-wide font-semibold mt-1">
-                    Projects Delivered.
+                    {t("Projects Delivered.", "Proyek Selesai.")}
                   </div>
                 </div>
               </div>
 
               {/* Card 2 */}
               <div
-                className="backdrop-blur-sm rounded-2xl p-4 flex flex-col justify-between w-44 min-h-[140px]"
+                className="backdrop-blur-sm rounded-2xl p-4 flex flex-col justify-between w-36 sm:w-44 min-h-[120px] sm:min-h-[140px]"
                 style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
               >
                 <div className="flex items-start justify-between">
                   <p className="text-xs leading-tight" style={{ color: "rgba(255,255,255,0.5)" }}>
-                    Years of
-                    <br />
-                    experience
+                    {lang === "EN" ? <>Years of<br />experience</> : <>Tahun<br />pengalaman</>}
                   </p>
                   <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ border: "1px solid rgba(255,255,255,0.1)" }}>
                     <ArrowUpRight className="w-3 h-3" style={{ color: "rgba(255,255,255,0.5)" }} />
                   </div>
                 </div>
                 <div>
-                  <div className="text-4xl font-bold" style={{ fontFamily: "var(--font-oswald)", color: "white" }}>
+                  <div className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: "var(--font-lora)", color: "white" }}>
                     4+
                   </div>
                   <div className="text-[10px] uppercase tracking-wide font-semibold mt-1" style={{ color: "rgba(255,255,255,0.25)" }}>
-                    Years in IT Industry
+                    {t("Years in IT Industry", "Tahun di Industri IT")}
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* CENTER — spacer */}
-          <div />
+          {/* CENTER — spacer, hidden on mobile */}
+          <div className="hidden md:block" />
 
-          {/* RIGHT column */}
-          <div className="flex flex-col justify-between px-8 py-10">
+          {/* RIGHT column — hidden on mobile */}
+          <div className="hidden md:flex flex-col justify-between px-12 py-12">
             <div className="flex flex-col items-end text-right">
               <h2
                 className="text-5xl xl:text-7xl font-bold leading-[0.9] uppercase tracking-tight mb-6"
-                style={{ fontFamily: "var(--font-oswald)", color: "white" }}
+                style={{ fontFamily: "var(--font-lora)", color: "white" }}
               >
                 Frontend
                 <br />
                 Engineer
-                <br />
-                &amp; UI Dev
               </h2>
               <p className="text-sm leading-relaxed max-w-[240px]" style={{ color: "rgba(255,255,255,0.5)" }}>
-                Specialized in{" "}
-                <span className="font-bold" style={{ color: "white" }}>React & Next.js</span>
-                , building scalable and performant interfaces with modern tools and best practices.
+                {t("Specialized in", "Spesialis dalam")}{" "}
+                <span className="font-bold" style={{ color: "white" }}>React & Angular</span>
+                {t(", building scalable and performant interfaces with modern tools and best practices.", ", membangun antarmuka yang skalabel dan berperforma tinggi dengan tools dan praktik terbaik modern.")}
               </p>
             </div>
 
