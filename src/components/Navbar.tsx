@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X, Sun, Moon, FileDown, Languages } from "lucide-react";
-import { useTheme } from "@/components/ThemeProvider";
+import { Menu, X, FileDown, Languages } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
 import { type Section } from "@/components/PageController";
 import {
@@ -26,15 +25,12 @@ type Props = {
 
 export default function Navbar({ active, onNavigate }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
   const { lang, setLang } = useLang();
 
   const handleNav = (id: Section) => {
     onNavigate(id);
     setMenuOpen(false);
   };
-
-  const isDark = theme === "dark";
 
   return (
     <TooltipProvider delay={200}>
@@ -57,7 +53,7 @@ export default function Navbar({ active, onNavigate }: Props) {
             <button
               key={link.num}
               onClick={() => handleNav(link.id)}
-              className={`text-sm tracking-wide transition-colors ${
+              className={`text-xs tracking-wide transition-colors ${
                 active === link.id ? "text-white font-bold" : "text-white/40 hover:text-white/80"
               }`}
             >
@@ -75,21 +71,8 @@ export default function Navbar({ active, onNavigate }: Props) {
         <div className="flex items-center gap-2">
           <Tooltip>
             <TooltipTrigger render={
-              <button
-                onClick={() => setTheme(isDark ? "light" : "dark")}
-                className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:border-white/40 transition-all"
-                aria-label="Toggle theme"
-              >
-                {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-              </button>
-            } />
-            <TooltipContent side="bottom">{isDark ? "Light Mode" : "Dark Mode"}</TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger render={
               <a
-                href="/cv-salman-faris.pdf"
+                href="/CV-Salman_Faris_Siddiq.docx"
                 download
                 className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:border-white/40 transition-all"
                 aria-label="Download CV"
@@ -144,7 +127,7 @@ export default function Navbar({ active, onNavigate }: Props) {
                   <span className="font-mono text-xs w-8 flex-shrink-0 text-white/30">
                     {link.num}/
                   </span>
-                  <span className="font-bold tracking-widest uppercase flex-1" style={{ fontFamily: "var(--font-lora)", fontSize: "1.4rem" }}>
+                  <span className="font-bold tracking-widest uppercase flex-1" style={{ fontFamily: "var(--font-lora)", fontSize: "1rem" }}>
                     {lang === "EN" ? link.labelEn : link.labelId}
                   </span>
                   {active === link.id && (

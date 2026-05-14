@@ -3,13 +3,15 @@
 import { useState } from "react";
 import {
   SiAngular, SiTailwindcss, SiReact, SiAntdesign,
-  SiRedux, SiMysql, SiNextdotjs, SiDotnet,
+  SiRedux, SiMysql, SiNextdotjs, SiDotnet, SiSupabase, SiFigma, SiShadcnui,
 } from "react-icons/si";
-import { MapPin, X, ExternalLink, Calendar, Building2, Globe, ImageOff } from "lucide-react";
+import { MapPin, X, ExternalLink, Building2, Globe, ImageOff, Database } from "lucide-react";
 import { type IconType } from "react-icons";
+import type { LucideIcon } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
 
-type TechItem = { icon: IconType | null; label: string; color: string };
+type TechItem = { icon: IconType | LucideIcon | null; label: string; color: string };
+type ProjectType = "main-job" | "freelance";
 type Project = {
   id: number;
   title: string;
@@ -19,27 +21,26 @@ type Project = {
   detailEn: string;
   detailId: string;
   client: string;
-  periodEn: string;
-  periodId: string;
   domain?: string;
   screenshots: string[];
   tech: TechItem[];
-  tag: string;
+  type: ProjectType;
 };
 
 const projects: Project[] = [
   {
     id: 1, title: "MCAP", subtitle: "Mobile Collateral Appraisal Platform",
-    tag: "Banking · Mobile",
+    type: "main-job",
     client: "PT Bank Mandiri",
-    periodEn: "January 2023 — Present",
-    periodId: "Januari 2023 — Sekarang",
-    domain: undefined,
+    domain: "mcap.bankmandiri.co.id",
     descriptionEn: "Mobile platform for real-time collateral appraisal with interactive map integration.",
     descriptionId: "Platform mobile untuk penilaian agunan secara real-time dengan integrasi peta interaktif.",
     detailEn: "MCAP is a mobile web application used by PT Bank Mandiri's collateral appraisal team to conduct on-site asset surveys and valuations. The app features geolocation, asset photo capture, and map integration for accurately marking collateral locations.",
     detailId: "MCAP adalah aplikasi mobile web yang digunakan oleh tim penilai agunan PT Bank Mandiri untuk melakukan survei dan penilaian aset secara langsung di lapangan. Aplikasi ini dilengkapi dengan fitur geolokasi, pengambilan foto aset, serta integrasi peta untuk menandai lokasi agunan secara akurat.",
-    screenshots: [],
+    screenshots: [
+      "/screenshots/mcap-1.png",
+      "/screenshots/mcap-2.png",
+    ],
     tech: [
       { icon: SiAngular, label: "Angular", color: "#DD0031" },
       { icon: SiTailwindcss, label: "Tailwind", color: "#38BDF8" },
@@ -48,16 +49,18 @@ const projects: Project[] = [
   },
   {
     id: 2, title: "ORP", subtitle: "Operational Request Platform",
-    tag: "Operations · Web",
+    type: "main-job",
     client: "PT Bank Mandiri",
-    periodEn: "March 2022 — December 2022",
-    periodId: "Maret 2022 — Desember 2022",
-    domain: undefined,
+    domain: "app.superops.bankmandiri.co.id",
     descriptionEn: "Operational request management platform with centralized state management and enterprise UI.",
     descriptionId: "Platform manajemen permintaan operasional dengan state management terpusat dan UI enterprise.",
     detailEn: "ORP is an internal PT Bank Mandiri system used to manage operational requests between divisions. Key features include request submission, multi-level approval workflow, status tracking, and a real-time monitoring dashboard with notifications.",
     detailId: "ORP merupakan sistem internal PT Bank Mandiri yang digunakan untuk mengelola permintaan operasional antar divisi. Fitur utama meliputi pengajuan request, approval workflow multi-level, tracking status, serta dashboard monitoring real-time dengan notifikasi.",
-    screenshots: [],
+    screenshots: [
+      "/screenshots/orp-1.png",
+      "/screenshots/orp-2.png",
+      "/screenshots/orp-3.png",
+    ],
     tech: [
       { icon: SiReact, label: "React", color: "#61DAFB" },
       { icon: SiTailwindcss, label: "Tailwind", color: "#38BDF8" },
@@ -67,10 +70,8 @@ const projects: Project[] = [
   },
   {
     id: 3, title: "CMS", subtitle: "Collateral Management System",
-    tag: "Enterprise · Backend",
+    type: "main-job",
     client: "PT Bank Mandiri",
-    periodEn: "June 2022 — February 2023",
-    periodId: "Juni 2022 — Februari 2023",
     domain: undefined,
     descriptionEn: "Enterprise-scale collateral management system for asset data management and reporting.",
     descriptionId: "Sistem manajemen agunan skala enterprise untuk pengelolaan data aset dan laporan.",
@@ -83,42 +84,120 @@ const projects: Project[] = [
     ],
   },
   {
-    id: 4, title: "MUA", subtitle: "MUA Platform",
-    tag: "Lifestyle · Web",
-    client: "Internal / Freelance",
-    periodEn: "August 2023 — October 2023",
-    periodId: "Agustus 2023 — Oktober 2023",
+    id: 4, title: "IRS", subtitle: "Internal Reconciliation System",
+    type: "main-job",
+    client: "PT Bank Mandiri",
     domain: undefined,
-    descriptionEn: "Modern web application for content management and professional makeup artist services.",
-    descriptionId: "Aplikasi web modern untuk manajemen konten dan layanan makeup artist profesional.",
-    detailEn: "A digital platform for professional makeup artists that enables portfolio management, client appointment booking, and service content management. Built with Next.js and Ant Design for a professional and responsive look.",
-    detailId: "Platform digital untuk makeup artist profesional yang memungkinkan pengelolaan portofolio, booking jadwal klien, serta manajemen konten layanan. Dibangun dengan Next.js dan Ant Design untuk tampilan yang profesional dan responsif.",
+    descriptionEn: "Internal data reconciliation system for automated cross-system financial data validation and reporting.",
+    descriptionId: "Sistem rekonsiliasi data internal untuk validasi dan pelaporan data keuangan lintas sistem secara otomatis.",
+    detailEn: "IRS is an internal reconciliation system built for PT Bank Mandiri to automate the process of validating and matching financial data across multiple systems. The system uses SSIS (SQL Server Integration Services) for ETL pipelines and MySQL for data storage, enabling accurate and efficient reconciliation reporting at scale.",
+    detailId: "IRS adalah sistem rekonsiliasi internal yang dibangun untuk PT Bank Mandiri guna mengotomatisasi proses validasi dan pencocokan data keuangan lintas sistem. Sistem ini menggunakan SSIS (SQL Server Integration Services) untuk pipeline ETL dan MySQL sebagai penyimpanan data, menghasilkan laporan rekonsiliasi yang akurat dan efisien dalam skala besar.",
     screenshots: [],
     tech: [
-      { icon: SiNextdotjs, label: "Next.js", color: "#ffffff" },
-      { icon: SiTailwindcss, label: "Tailwind", color: "#38BDF8" },
-      { icon: SiAntdesign, label: "Ant Design", color: "#1677FF" },
+      { icon: SiMysql, label: "MySQL", color: "#4479A1" },
+      { icon: Database, label: "SSIS", color: "#CC2927" },
     ],
   },
   {
-    id: 5, title: "SundaBinekas", subtitle: "SundaBinekas Platform",
-    tag: "Culture · Web",
+    id: 6, title: "Nonoman Galuh", subtitle: "Platform Budaya Sunda",
+    type: "freelance",
     client: "Nonoman Galuh",
-    periodEn: "November 2023 — January 2024",
-    periodId: "November 2023 — Januari 2024",
-    domain: "sundabinekas.id",
-    descriptionEn: "Sundanese culture-based digital platform with a modern design using the latest UI components.",
-    descriptionId: "Platform digital berbasis budaya Sunda dengan desain modern menggunakan komponen UI terkini.",
-    detailEn: "SundaBinekas is a digital community platform that promotes Sundanese culture and local wisdom. The platform features cultural articles, community events, and a directory of Sundanese figures and organizations. Built with Next.js and shadcn/ui for a modern user experience.",
-    detailId: "SundaBinekas adalah platform komunitas digital yang mengangkat budaya dan kearifan lokal Sunda. Platform ini menampilkan artikel budaya, event komunitas, serta direktori tokoh dan organisasi Sunda. Dibangun dengan Next.js dan shadcn/ui untuk pengalaman pengguna yang modern.",
-    screenshots: [],
+    domain: "nonoman-galuh.vercel.app",
+    descriptionEn: "Cultural organization platform featuring news, YouTube channel, digital library, and member management.",
+    descriptionId: "Platform organisasi budaya dengan fitur berita, kanal YouTube, perpustakaan digital, dan manajemen anggota.",
+    detailEn: "Nonoman Galuh is a digital platform for a Sundanese cultural organization based in Ciamis, West Java. The platform includes a news feed, YouTube video showcase (Kanal YouTube), a digital book library called Bale Maos, member directories, and cultural program galleries. Built with Next.js, Tailwind CSS, and Supabase as the backend and database.",
+    detailId: "Nonoman Galuh adalah platform digital untuk organisasi kebudayaan Sunda yang berbasis di Ciamis, Jawa Barat. Platform ini mencakup feed berita dan informasi, tampilan video YouTube (Kanal YouTube), perpustakaan buku digital bernama Bale Maos, direktori anggota, serta galeri program budaya. Dibangun dengan Next.js, Tailwind CSS, dan Supabase sebagai backend dan database.",
+    screenshots: [
+      "/screenshots/nonoman-1.png",
+      "/screenshots/nonoman-2.png",
+      "/screenshots/nonoman-3.png",
+    ],
     tech: [
       { icon: SiNextdotjs, label: "Next.js", color: "#ffffff" },
       { icon: SiTailwindcss, label: "Tailwind", color: "#38BDF8" },
-      { icon: null, label: "shadcn/ui", color: "#888888" },
+      { icon: SiSupabase, label: "Supabase", color: "#3ECF8E" },
+    ],
+  },
+  {
+    id: 7, title: "PUKIS", subtitle: "Dongeng Sunda",
+    type: "freelance",
+    client: "Nonoman Galuh",
+    domain: "www.pukis-dongengsunda.com",
+    descriptionEn: "Interactive Sundanese folklore digital platform with an interactive regional map and authentication system.",
+    descriptionId: "Platform digital dongeng Sunda interaktif dengan peta wilayah dan sistem autentikasi pengguna.",
+    detailEn: "PUKIS (Dongeng Sunda) is a digital community platform that preserves and promotes Sundanese folklore. Key features include an interactive map of West Java showing folklore locations across 27 regencies/cities, story reading, and Google-based authentication. Built with Next.js, Tailwind CSS, shadcn/ui, and Supabase as the backend and database.",
+    detailId: "PUKIS (Dongeng Sunda) adalah platform komunitas digital untuk melestarikan dan memperkenalkan kembali dongeng-dongeng Sunda. Fitur utama mencakup peta interaktif Jawa Barat yang menampilkan lokasi dongeng dari 27 kabupaten/kota, pembacaan cerita, serta autentikasi berbasis Google. Dibangun dengan Next.js, Tailwind CSS, shadcn/ui, dan Supabase sebagai backend dan database.",
+    screenshots: [
+      "/screenshots/pukis-3.png",
+      "/screenshots/pukis-2.png",
+      "/screenshots/pukis-1.png",
+    ],
+    tech: [
+      { icon: SiNextdotjs, label: "Next.js", color: "#ffffff" },
+      { icon: SiTailwindcss, label: "Tailwind", color: "#38BDF8" },
+      { icon: SiShadcnui, label: "shadcn/ui", color: "#ffffff" },
+      { icon: SiSupabase, label: "Supabase", color: "#3ECF8E" },
+    ],
+  },
+  {
+    id: 8, title: "Wedding Invitation", subtitle: "Digital Wedding Invitation",
+    type: "freelance",
+    client: "Personal",
+    domain: "salman-karima.com",
+    descriptionEn: "Animated digital wedding invitation with illustrated storytelling and elegant warm design.",
+    descriptionId: "Undangan pernikahan digital beranimasi dengan ilustrasi cerita dan desain hangat yang elegan.",
+    detailEn: "A personalized digital wedding invitation for Salman & Karina, built as a mobile-first web experience. Features a story-driven flow with illustrated scenes — from their school days to the wedding day — accompanied by a Quranic quote, event details, and a closing message. Built with Next.js and Tailwind CSS for a smooth, responsive experience.",
+    detailId: "Undangan pernikahan digital personal untuk Salman & Karina, dibangun sebagai pengalaman web berbasis mobile. Menampilkan alur berbasis cerita dengan ilustrasi — mulai dari masa sekolah hingga hari pernikahan — dilengkapi ayat Al-Qur'an, detail acara, dan pesan penutup. Dibangun dengan Next.js dan Tailwind CSS untuk pengalaman yang halus dan responsif.",
+    screenshots: [
+      "/screenshots/wedding-1.png",
+      "/screenshots/wedding-2.png",
+      "/screenshots/wedding-3.png",
+      "/screenshots/wedding-4.png",
+    ],
+    tech: [
+      { icon: SiNextdotjs, label: "Next.js", color: "#ffffff" },
+      { icon: SiTailwindcss, label: "Tailwind", color: "#38BDF8" },
+    ],
+  },
+  {
+    id: 9, title: "PENTAGON", subtitle: "Design System & UI Design",
+    type: "freelance",
+    client: "Pemerintah Provinsi Gorontalo",
+    domain: undefined,
+    descriptionEn: "UI design and design system for an open government data platform of Gorontalo Province.",
+    descriptionId: "Desain UI dan design system untuk platform data terbuka pemerintah Provinsi Gorontalo.",
+    detailEn: "PENTAGON (Platform Data Terbuka Pemerintah Provinsi Gorontalo) is a government open data portal designed to aggregate, manage, and share public datasets across all regional agencies. The design system covers a full page set — homepage, dataset explorer, regional heritage (Khazanah Gorontalo), statistics dashboard, publications, and news. Built entirely in Figma with a deep purple color palette, serif typography, and a clean data-forward layout.",
+    detailId: "PENTAGON (Platform Data Terbuka Pemerintah Provinsi Gorontalo) adalah portal data terbuka pemerintah yang dirancang untuk mengumpulkan, mengelola, dan membagikan dataset publik dari seluruh perangkat daerah. Design system mencakup halaman lengkap — beranda, eksplorasi dataset, khazanah daerah, dashboard statistik, publikasi, dan berita. Dirancang sepenuhnya di Figma dengan palet warna ungu tua, tipografi serif, dan tata letak yang bersih dan berbasis data.",
+    screenshots: [
+      "/screenshots/pentagon-1.png",
+      "/screenshots/pentagon-2.png",
+      "/screenshots/pentagon-3.png",
+      "/screenshots/pentagon-4.png",
+      "/screenshots/pentagon-5.png",
+      "/screenshots/pentagon-6.png",
+    ],
+    tech: [
+      { icon: SiFigma, label: "Figma", color: "#F24E1E" },
     ],
   },
 ];
+
+const typeConfig = {
+  "main-job": {
+    color: "#60a5fa",
+    bg: "rgba(96,165,250,0.12)",
+    border: "rgba(96,165,250,0.25)",
+    labelEn: "Main Job",
+    labelId: "Pekerjaan Utama",
+  },
+  "freelance": {
+    color: "#fbbf24",
+    bg: "rgba(251,191,36,0.12)",
+    border: "rgba(251,191,36,0.25)",
+    labelEn: "Freelance",
+    labelId: "Freelance",
+  },
+};
 
 export default function Works() {
   const [selected, setSelected] = useState<Project | null>(null);
@@ -139,11 +218,23 @@ export default function Works() {
               {lang === "EN" ? <>Selected<br />Projects</> : <>Proyek<br />Pilihan</>}
             </h2>
           </div>
-          <p className="text-sm max-w-xs sm:text-right leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
-            {t("A collection of projects built across", "Kumpulan proyek yang dibangun selama")}{" "}
-            <span className="font-semibold" style={{ color: "white" }}>4 {t("years", "tahun")}</span>{" "}
-            {t("of frontend engineering experience.", "pengalaman frontend engineering.")}
-          </p>
+          <div className="flex flex-col items-start sm:items-end gap-2">
+            <p className="text-sm max-w-xs sm:text-right leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
+              {t("A collection of projects built across", "Kumpulan proyek yang dibangun selama")}{" "}
+              <span className="font-semibold" style={{ color: "white" }}>4 {t("years", "tahun")}</span>{" "}
+              {t("of frontend engineering experience.", "pengalaman frontend engineering.")}
+            </p>
+            <div className="flex items-center gap-3">
+              {(["main-job", "freelance"] as const).map((type) => (
+                <div key={type} className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: typeConfig[type].color }} />
+                  <span className="text-[10px] font-medium" style={{ color: "rgba(255,255,255,0.45)" }}>
+                    {lang === "EN" ? typeConfig[type].labelEn : typeConfig[type].labelId}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Cards */}
@@ -152,23 +243,35 @@ export default function Works() {
             <div
               key={project.id}
               onClick={() => setSelected(project)}
-              className="group rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 cursor-pointer hover:scale-[1.02] hover:border-white/20"
-              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
+              className="group rounded-2xl p-5 flex flex-col justify-between transition-all duration-300 cursor-pointer hover:scale-[1.02]"
+              style={{
+                background: "rgba(255,255,255,0.05)",
+                border: `1px solid ${typeConfig[project.type].border}`,
+              }}
             >
               <div>
-                <div className="flex items-start justify-between mb-3">
+                <div className="flex items-start mb-3">
                   <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(155,27,27,0.2)", border: "1px solid rgba(155,27,27,0.3)" }}>
                     <span className="text-[#ff6b6b] text-xs font-bold" style={{ fontFamily: "var(--font-lora)" }}>
                       {String(project.id).padStart(2, "0")}
                     </span>
                   </div>
-                  <span className="text-[10px] uppercase tracking-widest rounded-full px-2 py-0.5" style={{ color: "rgba(255,255,255,0.25)", border: "1px solid rgba(255,255,255,0.1)" }}>
-                    {project.tag}
+                </div>
+                <div className="flex items-center gap-2 mb-2">
+                  <h3 className="text-xl font-bold uppercase leading-tight" style={{ fontFamily: "var(--font-lora)", color: "white" }}>
+                    {project.title}
+                  </h3>
+                  <span
+                    className="text-[9px] font-semibold uppercase tracking-wider rounded-full px-2 py-0.5 flex-shrink-0"
+                    style={{
+                      color: typeConfig[project.type].color,
+                      background: typeConfig[project.type].bg,
+                      border: `1px solid ${typeConfig[project.type].border}`,
+                    }}
+                  >
+                    {lang === "EN" ? typeConfig[project.type].labelEn : typeConfig[project.type].labelId}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold uppercase leading-tight mb-1" style={{ fontFamily: "var(--font-lora)", color: "white" }}>
-                  {project.title}
-                </h3>
                 <p className="text-xs mb-3" style={{ color: "rgba(255,255,255,0.25)" }}>{project.subtitle}</p>
                 <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
                   {lang === "EN" ? project.descriptionEn : project.descriptionId}
@@ -205,9 +308,9 @@ export default function Works() {
             className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm"
             onClick={() => setSelected(null)}
           />
-          <div className="fixed inset-0 z-[70] flex items-end sm:items-center justify-center sm:p-6 pointer-events-none">
+          <div className="fixed inset-0 z-[70] flex items-center justify-center px-3 py-4 sm:p-6 pointer-events-none">
             <div
-              className="w-full sm:max-w-3xl max-h-[90vh] sm:max-h-[85vh] rounded-t-3xl sm:rounded-3xl overflow-hidden flex flex-col pointer-events-auto"
+              className="w-full sm:max-w-3xl max-h-[78vh] sm:max-h-[85vh] rounded-3xl overflow-hidden flex flex-col pointer-events-auto"
               style={{ background: "#140806", border: "1px solid rgba(255,255,255,0.1)" }}
             >
               {/* Modal header */}
@@ -219,9 +322,21 @@ export default function Works() {
                     </span>
                   </div>
                   <div>
-                    <h2 className="text-white font-bold text-lg uppercase leading-none" style={{ fontFamily: "var(--font-lora)" }}>
-                      {selected.title}
-                    </h2>
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-white font-bold text-lg uppercase leading-none" style={{ fontFamily: "var(--font-lora)" }}>
+                        {selected.title}
+                      </h2>
+                      <span
+                        className="text-[9px] font-semibold uppercase tracking-wider rounded-full px-2 py-0.5 flex-shrink-0"
+                        style={{
+                          color: typeConfig[selected.type].color,
+                          background: typeConfig[selected.type].bg,
+                          border: `1px solid ${typeConfig[selected.type].border}`,
+                        }}
+                      >
+                        {lang === "EN" ? typeConfig[selected.type].labelEn : typeConfig[selected.type].labelId}
+                      </span>
+                    </div>
                     <p className="text-[10px] mt-0.5" style={{ color: "rgba(255,255,255,0.3)" }}>{selected.subtitle}</p>
                   </div>
                 </div>
@@ -238,20 +353,13 @@ export default function Works() {
               <div className="overflow-y-auto flex-1 p-4 sm:p-6 space-y-6" style={{ scrollbarWidth: "none" }}>
 
                 {/* Meta info */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="rounded-2xl p-4" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
                     <div className="flex items-center gap-2 mb-2">
                       <Building2 className="w-3.5 h-3.5" style={{ color: "#ff6b6b" }} />
                       <span className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: "rgba(255,255,255,0.3)" }}>Client</span>
                     </div>
                     <p className="text-white text-sm font-semibold">{selected.client}</p>
-                  </div>
-                  <div className="rounded-2xl p-4" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Calendar className="w-3.5 h-3.5" style={{ color: "#ff6b6b" }} />
-                      <span className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: "rgba(255,255,255,0.3)" }}>{t("Period", "Periode")}</span>
-                    </div>
-                    <p className="text-white text-sm font-semibold">{lang === "EN" ? selected.periodEn : selected.periodId}</p>
                   </div>
                   <div className="rounded-2xl p-4" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
                     <div className="flex items-center gap-2 mb-2">
@@ -284,7 +392,7 @@ export default function Works() {
                   {selected.screenshots.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {selected.screenshots.map((src, i) => (
-                        <img key={i} src={src} alt={`Screenshot ${i + 1}`} className="rounded-xl w-full object-cover aspect-video" />
+                        <img key={i} src={src} alt={`Screenshot ${i + 1}`} className="rounded-xl w-full h-auto object-contain" />
                       ))}
                     </div>
                   ) : (

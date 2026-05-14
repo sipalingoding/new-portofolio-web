@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Lora, Caveat } from "next/font/google";
 import "./globals.css";
-import ThemeProvider from "@/components/ThemeProvider";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
@@ -24,6 +23,11 @@ const caveat = Caveat({
 export const metadata: Metadata = {
   title: "Portfolio — Creative Branding Studio",
   description: "Unlock your business potential with expert solutions.",
+  icons: {
+    icon: "/sfs-icon.svg",
+    shortcut: "/sfs-icon.svg",
+    apple: "/sfs-icon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -37,7 +41,7 @@ export default function RootLayout({
       className={`${plusJakartaSans.variable} ${lora.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="h-screen overflow-hidden bg-[#0D0605] text-white">
-        <ThemeProvider>{children}</ThemeProvider>
+        {children}
       </body>
     </html>
   );

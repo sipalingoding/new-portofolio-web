@@ -18,8 +18,8 @@ const contacts = [
   {
     icon: FaLinkedin,
     label: "LinkedIn",
-    value: "linkedin.com/salmanfarissiddiq",
-    href: "https://linkedin.com/in/salmanfarissiddiq",
+    value: "linkedin.com/in/salman-faris-siddiq",
+    href: "https://www.linkedin.com/in/salman-faris-siddiq/",
     color: "#0A66C2",
     bg: "rgba(10,102,194,0.1)",
     border: "rgba(10,102,194,0.2)",

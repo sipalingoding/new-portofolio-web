@@ -1,7 +1,6 @@
 "use client";
 
-import { ArrowUpRight, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowUpRight, Plus, FileDown } from "lucide-react";
 import Image from "next/image";
 import {
   SiReact,
@@ -10,7 +9,7 @@ import {
   SiTailwindcss,
   SiAntdesign,
   SiFigma,
-  SiJenkins,
+  SiSupabase,
   SiClaude,
 } from "react-icons/si";
 import { useLang } from "@/context/LanguageContext";
@@ -31,7 +30,7 @@ export default function Hero() {
       </div>
 
       {/* Person photo */}
-      <div className="absolute inset-0 z-0 flex items-end justify-center pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 z-0 flex items-end justify-center pointer-events-none overflow-hidden translate-x-8 md:translate-x-0">
         <div className="relative w-full md:w-[80%] h-[90%] md:h-[140%] mb-0">
           <Image
             src="/foto-profile.png"
@@ -49,7 +48,7 @@ export default function Hero() {
 
           {/* LEFT column */}
           <div className="flex flex-col justify-between px-6 py-8 md:px-12 md:py-12">
-            <div>
+            <div className="pt-8 md:pt-0">
               <h1
                 className="text-5xl sm:text-6xl xl:text-7xl font-bold leading-[1] md:leading-[0.95] uppercase tracking-tight mb-4 md:mb-6"
                 style={{ fontFamily: "var(--font-caveat)", color: "white" }}
@@ -65,14 +64,18 @@ export default function Hero() {
                 <span className="font-bold" style={{ color: "white" }}>4 {t("years", "tahun")}</span>{" "}
                 {t("of experience building modern web applications.", "pengalaman membangun aplikasi web modern.")}
               </p>
-              <Button className="bg-[#9B1B1B] hover:bg-[#B52020] text-white rounded-full px-8 py-5 text-sm font-bold tracking-widest uppercase border-0">
-                {t("Read More", "Selengkapnya")}
-              </Button>
+              <a
+                href="/CV-Salman_Faris_Siddiq.docx"
+                download
+                className="inline-flex items-center gap-2 bg-[#9B1B1B] hover:bg-[#B52020] text-white rounded-full px-8 py-3 text-sm font-bold tracking-widest uppercase transition-colors"
+              >
+                <FileDown className="w-4 h-4" />
+                {t("Download CV", "Unduh CV")}
+              </a>
             </div>
 
             {/* Stat cards */}
             <div className="flex gap-3 mt-8 md:mt-0">
-              {/* Card 1 */}
               <div className="bg-white/95 text-black rounded-2xl p-4 flex flex-col justify-between w-32 sm:w-36 min-h-[120px] sm:min-h-[140px] shadow-sm">
                 <div className="w-7 h-7 bg-black rounded-md flex items-center justify-center">
                   <Plus className="w-4 h-4 text-white" strokeWidth={3} />
@@ -87,7 +90,6 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Card 2 */}
               <div
                 className="backdrop-blur-sm rounded-2xl p-4 flex flex-col justify-between w-36 sm:w-44 min-h-[120px] sm:min-h-[140px]"
                 style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
@@ -148,18 +150,15 @@ export default function Hero() {
                   <ArrowUpRight className="w-4 h-4" style={{ color: "white" }} />
                 </div>
               </div>
-              <p className="text-xs leading-relaxed mb-4" style={{ color: "rgba(255,255,255,0.25)" }}>
-                / React · Next.js · Angular · TailwindCSS · Ant Design · shadcn/ui · Jenkins /
-              </p>
               <div className="grid grid-cols-4 gap-2">
                 {[
                   { icon: SiReact, label: "React", color: "#61DAFB" },
-                  { icon: SiNextdotjs, label: "Next.js", color: "#000000" },
+                  { icon: SiNextdotjs, label: "Next.js", color: "#ffffff" },
                   { icon: SiAngular, label: "Angular", color: "#DD0031" },
                   { icon: SiTailwindcss, label: "Tailwind", color: "#38BDF8" },
                   { icon: SiAntdesign, label: "Ant Design", color: "#1677FF" },
                   { icon: SiFigma, label: "Figma", color: "#F24E1E" },
-                  { icon: SiJenkins, label: "Jenkins", color: "#D33833" },
+                  { icon: SiSupabase, label: "Supabase", color: "#3ECF8E" },
                   { icon: SiClaude, label: "Claude", color: "#D4A27F" },
                 ].map(({ icon: Icon, label, color }) => (
                   <div
