@@ -30,8 +30,8 @@ export default function Hero() {
       </div>
 
       {/* Person photo */}
-      <div className="absolute inset-0 z-0 flex items-end justify-center pointer-events-none overflow-hidden translate-x-8 md:translate-x-0">
-        <div className="relative w-full md:w-[80%] h-[90%] md:h-[140%] mb-0">
+      <div className="absolute inset-0 z-0 flex items-end justify-center pointer-events-none overflow-hidden">
+        <div className="relative w-[160%] md:w-[80%] h-[200%] md:h-[140%] mb-0">
           <Image
             src="/foto-profile.png"
             alt="Profile photo"
@@ -47,8 +47,8 @@ export default function Hero() {
         <div className="flex-1 max-w-[1440px] mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-0">
 
           {/* LEFT column */}
-          <div className="flex flex-col justify-between px-6 py-8 md:px-12 md:py-12">
-            <div className="pt-8 md:pt-0">
+          <div className="flex flex-col md:justify-between px-6 py-4 pb-6 md:px-12 md:py-12">
+            <div>
               <h1
                 className="text-5xl sm:text-6xl xl:text-7xl font-bold leading-[1] md:leading-[0.95] uppercase tracking-tight mb-4 md:mb-6"
                 style={{ fontFamily: "var(--font-caveat)", color: "white" }}
@@ -75,14 +75,14 @@ export default function Hero() {
             </div>
 
             {/* Stat cards */}
-            <div className="flex gap-3 mt-8 md:mt-0">
+            <div className="flex gap-3 mt-5 md:mt-0">
               <div className="bg-white/95 text-black rounded-2xl p-4 flex flex-col justify-between w-32 sm:w-36 min-h-[120px] sm:min-h-[140px] shadow-sm">
                 <div className="w-7 h-7 bg-black rounded-md flex items-center justify-center">
                   <Plus className="w-4 h-4 text-white" strokeWidth={3} />
                 </div>
                 <div>
                   <div className="text-3xl sm:text-4xl font-bold text-black" style={{ fontFamily: "var(--font-lora)" }}>
-                    5+
+                    8+
                   </div>
                   <div className="text-[10px] text-black/60 uppercase tracking-wide font-semibold mt-1">
                     {t("Projects Delivered.", "Proyek Selesai.")}

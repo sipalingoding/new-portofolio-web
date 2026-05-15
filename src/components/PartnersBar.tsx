@@ -4,12 +4,15 @@ const partners = [
   { name: "Bank Mandiri", logo: "/logo-mandiri.png", invert: false },
   { name: "Lawencon Internasional", logo: "/logo-lawencon.png", invert: false },
   { name: "Nonoman Galuh", logo: "/logo-nonoman-galuh.png", invert: true },
+  { name: "Pemerintah Provinsi Gorontalo", logo: "/logo-pemprov-gorontalo.png", invert: false },
   { name: "Bank Mandiri", logo: "/logo-mandiri.png", invert: false },
   { name: "Lawencon Internasional", logo: "/logo-lawencon.png", invert: false },
   { name: "Nonoman Galuh", logo: "/logo-nonoman-galuh.png", invert: true },
+  { name: "Pemerintah Provinsi Gorontalo", logo: "/logo-pemprov-gorontalo.png", invert: false },
   { name: "Bank Mandiri", logo: "/logo-mandiri.png", invert: false },
   { name: "Lawencon Internasional", logo: "/logo-lawencon.png", invert: false },
   { name: "Nonoman Galuh", logo: "/logo-nonoman-galuh.png", invert: true },
+  { name: "Pemerintah Provinsi Gorontalo", logo: "/logo-pemprov-gorontalo.png", invert: false },
 ];
 
 export default function PartnersBar() {
