@@ -21,7 +21,7 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio — Creative Branding Studio",
+  title: "Portfolio — Salman Faris Siddiq",
   description: "Unlock your business potential with expert solutions.",
   icons: {
     icon: "/sfs-icon.svg",

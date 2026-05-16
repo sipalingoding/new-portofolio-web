@@ -2,6 +2,7 @@
 
 import { ArrowUpRight, Plus, FileDown } from "lucide-react";
 import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
 import {
   SiReact,
   SiNextdotjs,
@@ -16,6 +17,64 @@ import { useLang } from "@/context/LanguageContext";
 
 export default function Hero() {
   const { lang, t } = useLang();
+
+  const lines = lang === "EN"
+    ? ["Code.", "Craft.", "Deliver."]
+    : ["Kode.", "Rancang.", "Kirim."];
+
+  const [displayed, setDisplayed] = useState<string[]>(["", "", ""]);
+  const [cursorLine, setCursorLine] = useState(0);
+  const animRef = useRef({ lineIdx: 0, charIdx: 0 });
+
+  useEffect(() => {
+    const currentLines = lang === "EN"
+      ? ["Code.", "Craft.", "Deliver."]
+      : ["Kode.", "Rancang.", "Kirim."];
+
+    animRef.current = { lineIdx: 0, charIdx: 0 };
+    setDisplayed(["", "", ""]);
+    setCursorLine(0);
+
+    let currentTimer: ReturnType<typeof setTimeout> | null = null;
+    const schedule = (fn: () => void, delay: number) => {
+      currentTimer = setTimeout(fn, delay);
+    };
+
+    const tick = () => {
+      const { lineIdx, charIdx } = animRef.current;
+
+      if (lineIdx >= currentLines.length) {
+        // All lines done — pause then loop from the beginning
+        schedule(() => {
+          animRef.current = { lineIdx: 0, charIdx: 0 };
+          setDisplayed(["", "", ""]);
+          setCursorLine(0);
+          schedule(tick, 150);
+        }, 1800);
+        return;
+      }
+
+      const line = currentLines[lineIdx];
+      if (charIdx < line.length) {
+        setDisplayed(prev => {
+          const next = [...prev];
+          next[lineIdx] = line.slice(0, charIdx + 1);
+          return next;
+        });
+        animRef.current.charIdx++;
+        schedule(tick, 85);
+      } else {
+        animRef.current.lineIdx++;
+        animRef.current.charIdx = 0;
+        setCursorLine(animRef.current.lineIdx);
+        schedule(tick, 320);
+      }
+    };
+
+    schedule(tick, 300);
+    return () => { if (currentTimer) clearTimeout(currentTimer); };
+  }, [lang]);
+
   return (
     <section
       id="home"
@@ -50,16 +109,30 @@ export default function Hero() {
           <div className="flex flex-col md:justify-between px-6 py-4 pb-6 md:px-12 md:py-12">
             <div>
               <h1
-                className="text-5xl sm:text-6xl xl:text-7xl font-bold leading-[1] md:leading-[0.95] uppercase tracking-tight mb-4 md:mb-6"
+                className="text-5xl sm:text-6xl xl:text-7xl font-bold leading-[1] md:leading-[0.95] uppercase tracking-tight mb-2 md:mb-6"
                 style={{ fontFamily: "var(--font-caveat)", color: "white" }}
               >
-                {lang === "EN" ? (
-                  <>Code.<br />Craft.<br />Deliver.</>
-                ) : (
-                  <>Kode.<br />Rancang.<br />Kirim.</>
-                )}
+                {lines.map((_, i) => (
+                  <span key={i}>
+                    {displayed[i]}
+                    {i === cursorLine && (
+                      <span
+                        style={{
+                          display: "inline-block",
+                          width: "3px",
+                          height: "0.8em",
+                          background: "white",
+                          marginLeft: "2px",
+                          verticalAlign: "middle",
+                          animation: "blink 0.9s step-end infinite",
+                        }}
+                      />
+                    )}
+                    {i < lines.length - 1 && <br />}
+                  </span>
+                ))}
               </h1>
-              <p className="text-sm leading-relaxed max-w-[220px] mb-6" style={{ color: "rgba(255,255,255,0.5)" }}>
+              <p className="text-sm leading-relaxed max-w-[220px] mb-3 md:mb-6" style={{ color: "rgba(255,255,255,0.5)" }}>
                 {t("Frontend Engineer with", "Frontend Engineer dengan")}{" "}
                 <span className="font-bold" style={{ color: "white" }}>4 {t("years", "tahun")}</span>{" "}
                 {t("of experience building modern web applications.", "pengalaman membangun aplikasi web modern.")}
@@ -75,7 +148,7 @@ export default function Hero() {
             </div>
 
             {/* Stat cards */}
-            <div className="flex gap-3 mt-5 md:mt-0">
+            <div className="flex gap-3 mt-2 md:mt-0">
               <div className="bg-white/95 text-black rounded-2xl p-4 flex flex-col justify-between w-32 sm:w-36 min-h-[120px] sm:min-h-[140px] shadow-sm">
                 <div className="w-7 h-7 bg-black rounded-md flex items-center justify-center">
                   <Plus className="w-4 h-4 text-white" strokeWidth={3} />

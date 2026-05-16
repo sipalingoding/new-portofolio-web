@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   SiAngular, SiTailwindcss, SiReact, SiAntdesign,
   SiRedux, SiMysql, SiNextdotjs, SiDotnet, SiSupabase, SiFigma, SiShadcnui,
@@ -201,7 +201,21 @@ const typeConfig = {
 
 export default function Works() {
   const [selected, setSelected] = useState<Project | null>(null);
+  const [imgLoading, setImgLoading] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { lang, t } = useLang();
+
+  useEffect(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (!selected || selected.screenshots.length === 0) {
+      setImgLoading(false);
+      return;
+    }
+    setImgLoading(true);
+    // random 2000–3000ms
+    timerRef.current = setTimeout(() => setImgLoading(false), 2000 + Math.random() * 1000);
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, [selected]);
 
   return (
     <div className="relative h-full w-full flex flex-col overflow-hidden" style={{ backgroundColor: "#0D0605", color: "white" }}>
@@ -392,7 +406,20 @@ export default function Works() {
                   {selected.screenshots.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {selected.screenshots.map((src, i) => (
-                        <img key={i} src={src} alt={`Screenshot ${i + 1}`} className="rounded-xl w-full h-auto object-contain" />
+                        <div key={i} className="rounded-xl overflow-hidden">
+                          {imgLoading ? (
+                            <div
+                              className="w-full aspect-video rounded-xl"
+                              style={{
+                                background: "linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.11) 50%, rgba(255,255,255,0.04) 75%)",
+                                backgroundSize: "800px 100%",
+                                animation: "shimmer 1.6s ease-in-out infinite",
+                              }}
+                            />
+                          ) : (
+                            <img src={src} alt={`Screenshot ${i + 1}`} className="w-full h-auto object-contain rounded-xl" />
+                          )}
+                        </div>
                       ))}
                     </div>
                   ) : (

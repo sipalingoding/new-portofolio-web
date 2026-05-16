@@ -31,7 +31,7 @@ export default function PartnersBar() {
           <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-12 bg-gradient-to-r from-[#0D0605] to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-12 bg-gradient-to-l from-[#0D0605] to-transparent z-10 pointer-events-none" />
 
-          <div className="flex animate-marquee whitespace-nowrap">
+          <div className="animate-marquee" style={{ display: "flex", width: "max-content" }}>
             {[...partners, ...partners].map((p, i) => (
               <div
                 key={i}
