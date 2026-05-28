@@ -72,7 +72,7 @@ export default function Navbar({ active, onNavigate }: Props) {
           <Tooltip>
             <TooltipTrigger render={
               <a
-                href="/CV-Salman_Faris_Siddiq.docx"
+                href="/CV_Salman_Faris_Siddiq.pdf"
                 download
                 className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:border-white/40 transition-all"
                 aria-label="Download CV"

@@ -138,7 +138,7 @@ export default function Hero() {
                 {t("of experience building modern web applications.", "pengalaman membangun aplikasi web modern.")}
               </p>
               <a
-                href="/CV-Salman_Faris_Siddiq.docx"
+                href="/CV_Salman_Faris_Siddiq.pdf"
                 download
                 className="inline-flex items-center gap-2 bg-[#9B1B1B] hover:bg-[#B52020] text-white rounded-full px-8 py-3 text-sm font-bold tracking-widest uppercase transition-colors"
               >
